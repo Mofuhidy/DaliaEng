@@ -1,6 +1,7 @@
 /* eslint-disable */
 // @ts-ignore
 import createImageUrlBuilder from "@sanity/image-url";
+// @ts-ignore
 import type { Image } from "sanity";
 import { dataset, projectId } from "../env";
 
