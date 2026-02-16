@@ -36,7 +36,7 @@ export default async function Home() {
         className="min-h-screen bg-canvas flex flex-col items-center justify-center border-t border-primary/10 py-20">
         <div className="w-full max-w-7xl mx-auto px-6 mb-12">
           <h2 className="text-4xl md:text-5xl font-serif text-primary">
-            Selected Works
+            {t("selected_works")}
           </h2>
         </div>
         <ProjectGallery />
@@ -51,9 +51,7 @@ export default async function Home() {
             {t("about")}
           </h2>
           <p className="font-sans text-lg md:text-xl text-primary/80 leading-relaxed">
-            DaliaEng creates spaces that breathe. Merging architectural
-            precision with organic textures, our work redefines modern luxury
-            through the lens of minimalism and warmth.
+            {t("about_text")}
           </p>
         </div>
       </section>
@@ -63,12 +61,12 @@ export default async function Home() {
         id="contact"
         className="min-h-[50vh] bg-primary text-canvas flex flex-col items-center justify-center relative overflow-hidden">
         {/* Noise overlay could go here */}
-        <h2 className="text-4xl md:text-6xl font-serif mb-8 z-10">
-          Let's Collaborate
+        <h2 className="text-4xl md:text-6xl font-serif mb-8 z-10 transition-transform duration-700 hover:scale-110">
+          {t("collab_title")}
         </h2>
         <a
           href="mailto:hello@daliaeng.com"
-          className="text-xl md:text-2xl font-sans uppercase tracking-widest hover:text-accent transition-colors z-10">
+          className="text-xl md:text-2xl font-sans uppercase tracking-widest hover:text-accent transition-colors z-10 underline underline-offset-8 decoration-canvas/30 hover:decoration-accent">
           hello@daliaeng.com
         </a>
       </section>

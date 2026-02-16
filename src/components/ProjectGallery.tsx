@@ -2,30 +2,31 @@
 
 import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
-
-// Placeholder data
-const projects = [
-  {
-    id: "1",
-    title: "Villa Al-Riyadh",
-    category: "Residential",
-    image: "/placeholder-1.jpg",
-  }, // Need images or patterns
-  {
-    id: "2",
-    title: "Oasis Penthouse",
-    category: "Residential",
-    image: "/placeholder-2.jpg",
-  },
-  {
-    id: "3",
-    title: "Azure Boutique",
-    category: "Commercial",
-    image: "/placeholder-3.jpg",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function ProjectGallery() {
+  const t = useTranslations("HomePage");
+
+  const projects = [
+    {
+      id: "1",
+      title: t("project_1_title"),
+      category: t("project_1_category"),
+      image: "/project-1.png",
+    },
+    {
+      id: "2",
+      title: t("project_2_title"),
+      category: t("project_2_category"),
+      image: "/project-2.png",
+    },
+    {
+      id: "3",
+      title: t("project_3_title"),
+      category: t("project_3_category"),
+      image: "/project-3.png",
+    },
+  ];
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -56,10 +57,7 @@ export default function ProjectGallery() {
         <motion.div key={project.id} variants={item}>
           {/* Using a gray placeholder div if image fails, but Link handles it */}
           <div className="w-full h-full bg-gray-200">
-            <ProjectCard
-              {...project}
-              image={`https://placehold.co/600x800/f5efeb/2f4156?text=${project.title}`}
-            />
+            <ProjectCard {...project} image={project.image} />
           </div>
         </motion.div>
       ))}

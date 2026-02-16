@@ -2,14 +2,16 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense } from "react";
-import { Environment, Html } from "@react-three/drei";
+import { useTranslations } from "next-intl";
+import { ScrollControls, Html } from "@react-three/drei";
+import Image from "next/image";
 import {
   EffectComposer,
   Bloom,
   Noise,
   Vignette,
 } from "@react-three/postprocessing";
-import FurnitureModel from "./FurnitureModel";
+import FloatingGallery from "./FloatingGallery";
 import Loader from "./Loader";
 import * as THREE from "three";
 
@@ -29,52 +31,79 @@ function Rig() {
 }
 
 export default function Hero3D() {
+  const t = useTranslations("HomePage");
   return (
     <div className="w-full h-screen relative bg-canvas select-none">
       <Canvas
         shadows
-        camera={{ position: [0, 0, 8], fov: 45 }}
-        dpr={[1, 2]} // Optimization for varying pixel ratios
-      >
+        camera={{ position: [0, 0, 8], fov: 35 }} // Narrower FOV for editorial look
+        dpr={[1, 2]}>
         <Suspense
           fallback={
             <Html center>
               <Loader />
             </Html>
           }>
-          {/* Lighting */}
-          <ambientLight intensity={0.5} />
-          <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            shadow-mapSize={2048}
-            castShadow
+          {/* Studio Lighting */}
+          {/* Key Light (White) */}
+          <rectAreaLight
+            width={10}
+            height={10}
+            color="#ffffff"
+            intensity={2}
+            position={[-5, 5, 5]}
+            lookAt={() => new THREE.Vector3(0, 0, 0)}
           />
-          {/* <Environment preset="city" /> - Removed to prevent fetch errors */}
+          {/* Fill Light (Subtle Warmth) */}
+          <rectAreaLight
+            width={10}
+            height={10}
+            color="#f5efeb"
+            intensity={1}
+            position={[5, 0, 5]}
+            lookAt={() => new THREE.Vector3(0, 0, 0)}
+          />
+          {/* Rim Light (Sky Blue) - Catches the glass edges */}
+          <rectAreaLight
+            width={10}
+            height={2}
+            color="#c8d9e6"
+            intensity={5}
+            position={[0, 5, -5]}
+            lookAt={() => new THREE.Vector3(0, 0, 0)}
+          />
 
-          {/* The Model */}
-          <FurnitureModel />
-
-          {/* Camera Rig (Parallax) */}
-          <Rig />
+          <ScrollControls pages={0} damping={0.1}>
+            <FloatingGallery />
+          </ScrollControls>
 
           {/* Post Processing */}
           <EffectComposer>
-            <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} />
+            <Bloom
+              luminanceThreshold={0.8}
+              mipmapBlur
+              intensity={0.5}
+              radius={0.5}
+            />
             <Noise opacity={0.05} />
-            <Vignette eskil={false} offset={0.1} darkness={0.5} />
+            <Vignette eskil={false} offset={0.1} darkness={0.4} />
           </EffectComposer>
         </Suspense>
       </Canvas>
 
       {/* Overlay Text/UI */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 text-primary mix-blend-difference">
-        <h1 className="text-6xl md:text-9xl font-serif tracking-tighter mix-blend-difference">
-          Dalia Al Dukhain
-        </h1>
-        <p className="text-lg md:text-xl font-sans uppercase tracking-[0.5em] mt-4 mix-blend-difference">
-          Interior Architecture
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-auto z-20 text-primary">
+        <div className="relative w-64 h-64 md:w-96 md:h-96">
+          <Image
+            src="/BlackLogo.png"
+            alt="Dalia Al Dukhain"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <p className="text-lg md:text-xl font-sans uppercase tracking-[0.5em] mt-8 font-light text-primary/80">
+          {t("hero_subtitle")}
         </p>
       </div>
     </div>

@@ -25,34 +25,35 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference text-primary bg-transparent">
-      {/* Logo */}
-      <Link href="/" className="relative w-12 h-12 z-50 mix-blend-normal">
+    <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center text-primary bg-transparent">
+      <Link
+        href="/"
+        className="relative w-10 h-10 md:w-12 md:h-12 z-50 flex items-center justify-center">
         <Image
           src="/BlackLogo.png"
           alt={t("title")}
-          fill
+          width={48}
+          height={48}
           className="object-contain"
           priority
         />
       </Link>
 
-      {/* Desktop Menu */}
-      <div className="hidden md:flex items-center gap-8 z-50 mix-blend-normal">
+      <div className="hidden md:flex items-center gap-8 z-50">
         <Link
           href="#projects"
           className="text-sm font-sans uppercase tracking-widest hover:text-accent transition-colors">
-          Projects
+          {t("projects")}
         </Link>
         <Link
           href="#about"
           className="text-sm font-sans uppercase tracking-widest hover:text-accent transition-colors">
-          About
+          {t("about")}
         </Link>
         <Link
           href="#contact"
           className="text-sm font-sans uppercase tracking-widest hover:text-accent transition-colors">
-          Contact
+          {t("contact")}
         </Link>
         <LangSwitcher />
       </div>
@@ -89,19 +90,19 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               href="#projects"
               className="text-3xl font-serif hover:text-accent transition-colors">
-              Projects
+              {t("projects")}
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="#about"
               className="text-3xl font-serif hover:text-accent transition-colors">
-              About
+              {t("about")}
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="#contact"
               className="text-3xl font-serif hover:text-accent transition-colors">
-              Contact
+              {t("contact")}
             </Link>
             <div className="mt-8">
               <LangSwitcher />

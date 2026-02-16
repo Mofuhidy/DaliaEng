@@ -1,6 +1,21 @@
 {
   "HomePage": {
-    "title": "DaliaEng Interiors",
-    "about": "About"
+    "title": "Dalia Al Dukhain",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact",
+    "hero_subtitle": "Interior Architecture",
+    "selected_works": "Selected Works",
+    "project_1_title": "Villa Al-Riyadh",
+    "project_1_category": "Residential",
+    "project_2_title": "Oasis Penthouse",
+    "project_2_category": "Residential",
+    "project_3_title": "Azure Boutique",
+    "project_3_category": "Commercial",
+    "collab_title": "Let's Collaborate",
+    "footer_desc": "Creating timeless spaces that blend minimalist luxury with functional harmony.",
+    "rights": "All rights reserved.",
+    "designed_by": "Designed by Anivo",
+    "about_text": "Dalia Al Dukhain creates spaces that breathe. Merging architectural precision with organic textures, our work redefines modern luxury through the lens of minimalism and warmth."
   }
 }
