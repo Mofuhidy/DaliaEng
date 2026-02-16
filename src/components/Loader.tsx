@@ -1,7 +1,14 @@
 export default function Loader() {
   return (
-    <div className="flex items-center justify-center w-full h-full bg-canvas text-transition">
-      <div className="w-12 h-12 border-4 border-current border-t-transparent rounded-full animate-spin" />
+    <div className="flex flex-col items-center justify-center w-full h-full bg-canvas">
+      <div className="relative flex flex-col items-center">
+        <div className="w-16 h-px bg-navy/20 overflow-hidden relative">
+          <div className="absolute inset-0 bg-navy w-full transition-transform duration-[2000ms] ease-in-out animate-loader-slide"></div>
+        </div>
+        <span className="mt-4 font-sans text-[10px] tracking-[0.4em] uppercase text-navy/60 animate-pulse">
+          Dalia Al Dukhain
+        </span>
+      </div>
     </div>
   );
 }

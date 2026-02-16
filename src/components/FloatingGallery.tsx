@@ -37,11 +37,8 @@ export default function FloatingGallery() {
       const t = state.clock.getElapsedTime();
       groupRef.current.position.y = Math.sin(t * 0.5) * 0.2;
 
-      // Scroll influence (if scroll controls are active)
       if (scroll) {
-        // This can be used to shift the gallery or change material properties globally
-        // For now, let's just rotate the whole group slightly based on scroll
-        groupRef.current.rotation.y = scroll.offset * 0.5;
+        // Only vertical shift if needed, but let's keep it simple
       }
     }
   });

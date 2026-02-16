@@ -1,42 +1,32 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Link } from "@/navigation";
 
 interface ProjectCardProps {
   id: string;
   title: string;
-  category: string;
   image: string;
 }
 
-export default function ProjectCard({
-  id,
-  title,
-  category,
-  image,
-}: ProjectCardProps) {
+export default function ProjectCard({ id, title, image }: ProjectCardProps) {
   return (
     <Link
       href={`/projects/${id}`}
-      className="group block relative overflow-hidden aspect-[4/5] bg-gray-100">
+      className="group block relative w-full h-full overflow-hidden">
       <Image
         src={image}
         alt={title}
         fill
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        className="object-cover transition-transform duration-1000 group-hover:scale-110"
+        priority={id === "1"}
       />
 
-      {/* Overlay with Teal interaction */}
-      <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      {/* Subtle overlay */}
+      <div className="absolute inset-0 bg-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-      <motion.div className="absolute bottom-0 left-0 w-full p-6 text-canvas translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-        <span className="text-xs uppercase tracking-widest text-accent mb-2 block">
-          {category}
-        </span>
-        <h3 className="text-2xl font-serif">{title}</h3>
-      </motion.div>
+      {/* Decorative corners or similar as per PRD "Sharp corners" */}
+      <div className="absolute inset-0 border-[0px] group-hover:border-[1px] border-white/30 transition-all duration-700 pointer-events-none" />
     </Link>
   );
 }

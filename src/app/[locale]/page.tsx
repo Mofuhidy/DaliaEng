@@ -25,50 +25,48 @@ export default async function Home() {
   const t = await getTranslations("HomePage");
 
   return (
-    <main className="w-full min-h-screen">
-      <section className="h-screen w-full relative">
+    <main className="w-full min-h-screen bg-background-beige select-none">
+      {/* Editorial Hero Session */}
+      <section className="h-screen w-full relative overflow-hidden">
         <Hero3D />
       </section>
 
-      {/* Featured Projects */}
+      {/* Index of Works */}
       <section
         id="projects"
-        className="min-h-screen bg-canvas flex flex-col items-center justify-center border-t border-primary/10 py-20">
-        <div className="w-full max-w-7xl mx-auto px-6 mb-12">
-          <h2 className="text-4xl md:text-5xl font-serif text-primary">
-            {t("selected_works")}
-          </h2>
-        </div>
+        className="min-h-screen bg-background-beige flex flex-col items-center justify-center py-24">
         <ProjectGallery />
       </section>
 
-      {/* About Section */}
-      <section
-        id="about"
-        className="min-h-[50vh] bg-canvas flex items-center justify-center border-t border-primary/10 py-20">
-        <div className="max-w-3xl text-center px-6">
-          <h2 className="text-4xl font-serif text-primary mb-6">
-            {t("about")}
-          </h2>
-          <p className="font-sans text-lg md:text-xl text-primary/80 leading-relaxed">
-            {t("about_text")}
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Section */}
+      {/* Closing Statement / Contact */}
       <section
         id="contact"
-        className="min-h-[50vh] bg-primary text-canvas flex flex-col items-center justify-center relative overflow-hidden">
-        {/* Noise overlay could go here */}
-        <h2 className="text-4xl md:text-6xl font-serif mb-8 z-10 transition-transform duration-700 hover:scale-110">
-          {t("collab_title")}
-        </h2>
-        <a
-          href="mailto:hello@daliaeng.com"
-          className="text-xl md:text-2xl font-sans uppercase tracking-widest hover:text-accent transition-colors z-10 underline underline-offset-8 decoration-canvas/30 hover:decoration-accent">
-          hello@daliaeng.com
-        </a>
+        className="min-h-[70vh] bg-background-beige text-navy flex flex-col items-center justify-center relative overflow-hidden px-6 border-t border-sky-blue/20">
+        {/* Subtle noise/texture overlay */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat"></div>
+
+        <div className="max-w-4xl text-center z-10 flex flex-col items-center gap-12">
+          <div className="flex flex-col items-center gap-4">
+            <span className="h-px w-24 bg-primary px-12"></span>
+            <h2 className="text-5xl md:text-8xl lg:text-9xl font-display font-bold tracking-tight transition-transform duration-1000 hover:scale-[1.02]">
+              {t("collab_title")}
+            </h2>
+          </div>
+
+          <div className="flex flex-col items-center gap-8">
+            <p className="font-display italic text-2xl md:text-3xl text-navy/70 max-w-2xl">
+              Let's redefine the relationship between space and self.
+            </p>
+
+            <div className="h-px w-full bg-navy/10"></div>
+
+            <a
+              href="mailto:hello@daliaeng.com"
+              className="text-2xl md:text-4xl lg:text-5xl font-sans font-light tracking-tighter hover:text-primary transition-all duration-500 underline underline-offset-[16px] decoration-navy/10 hover:decoration-primary">
+              hello@daliaeng.com
+            </a>
+          </div>
+        </div>
       </section>
 
       <Footer />

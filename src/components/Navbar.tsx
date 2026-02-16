@@ -25,59 +25,63 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center text-primary bg-transparent">
-      <Link
-        href="/"
-        className="relative w-10 h-10 md:w-12 md:h-12 z-50 flex items-center justify-center">
-        <Image
-          src="/BlackLogo.png"
-          alt={t("title")}
-          width={48}
-          height={48}
-          className="object-contain"
-          priority
-        />
-      </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 md:px-6 pointer-events-none">
+      <div className="bg-white/95 backdrop-blur-sm px-6 md:px-8 py-4 flex items-center justify-between shadow-[0_2px_20px_rgba(0,0,0,0.04)] pointer-events-auto w-full max-w-7xl border border-black/5">
+        {/* Menu Toggle / Left Action */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center justify-center text-primary hover:text-navy transition-colors">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+            />
+          </svg>
+        </button>
 
-      <div className="hidden md:flex items-center gap-8 z-50">
-        <Link
-          href="#projects"
-          className="text-sm font-sans uppercase tracking-widest hover:text-accent transition-colors">
-          {t("projects")}
+        {/* Logo / Branding */}
+        <Link href="/" className="flex flex-col items-center gap-1 group">
+          <div className="relative w-12 h-6 md:w-16 md:h-8 transition-transform duration-500 group-hover:scale-105">
+            <Image
+              src="/BlackLogo.png"
+              alt="Dalia Al Dukhain"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <span className="text-[7px] md:text-[9px] tracking-[0.4em] text-navy font-sans uppercase font-medium">
+            Dalia Al Dukhain
+          </span>
         </Link>
-        <Link
-          href="#about"
-          className="text-sm font-sans uppercase tracking-widest hover:text-accent transition-colors">
-          {t("about")}
-        </Link>
-        <Link
-          href="#contact"
-          className="text-sm font-sans uppercase tracking-widest hover:text-accent transition-colors">
-          {t("contact")}
-        </Link>
-        <LangSwitcher />
+
+        {/* Lang Switcher / Right Action */}
+        <div className="flex items-center gap-4">
+          <LangSwitcher />
+          <button className="hidden md:flex items-center justify-center text-primary hover:text-navy transition-colors">
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Hamburger */}
-      <button
-        className="md:hidden z-50 flex flex-col gap-1.5 focus:outline-none mix-blend-normal"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle Menu">
-        <motion.span
-          animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-          className="w-8 h-0.5 bg-primary block"
-        />
-        <motion.span
-          animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-          className="w-8 h-0.5 bg-primary block"
-        />
-        <motion.span
-          animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-          className="w-8 h-0.5 bg-primary block"
-        />
-      </button>
-
-      {/* Mobile Overlay Menu */}
+      {/* Fullscreen Overlay Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -85,31 +89,34 @@ export default function Navbar() {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="fixed inset-0 bg-canvas flex flex-col items-center justify-center gap-8 text-primary z-40">
+            className="fixed inset-0 bg-background-beige flex flex-col items-center justify-center gap-12 text-navy z-40 pointer-events-auto">
             <Link
               onClick={() => setIsOpen(false)}
               href="#projects"
-              className="text-3xl font-serif hover:text-accent transition-colors">
+              className="font-display text-5xl md:text-7xl hover:text-primary transition-colors cursor-pointer">
               {t("projects")}
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="#about"
-              className="text-3xl font-serif hover:text-accent transition-colors">
+              className="font-display text-5xl md:text-7xl hover:text-primary transition-colors cursor-pointer">
               {t("about")}
             </Link>
             <Link
               onClick={() => setIsOpen(false)}
               href="#contact"
-              className="text-3xl font-serif hover:text-accent transition-colors">
+              className="font-display text-5xl md:text-7xl hover:text-primary transition-colors cursor-pointer">
               {t("contact")}
             </Link>
-            <div className="mt-8">
-              <LangSwitcher />
+
+            <div className="absolute bottom-12 flex gap-8 font-sans text-xs tracking-widest uppercase text-muted">
+              <a href="#">Instagram</a>
+              <a href="#">Pinterest</a>
+              <a href="#">LinkedIn</a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }

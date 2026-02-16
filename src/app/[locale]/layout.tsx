@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Newsreader, Montserrat } from "next/font/google";
 import "../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
@@ -7,14 +7,15 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
   display: "swap",
+  style: ["normal", "italic"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
   display: "swap",
 });
@@ -53,7 +54,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <body
-        className={`${playfair.variable} ${inter.variable} antialiased bg-canvas text-primary`}>
+        className={`${newsreader.variable} ${montserrat.variable} antialiased bg-canvas text-navy`}>
         <NextIntlClientProvider messages={messages}>
           <SmoothScroll>
             <Navbar />

@@ -1,16 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-primary: #567c8d; /* Teal */
+  --color-background-beige: #f5efeb; /* Warm Beige */
+  --color-navy: #2f4156; /* Navy */
+  --color-muted: #8da3b0;
+  --color-sky-blue: #c8d9e6;
   --color-canvas: #f5efeb;
-  --color-primary: #2f4156;
-  --color-accent: #567c8d;
-  --color-transition: #c8d9e6;
 
-  /* Fonts - Check layout.tsx for variable names */
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-inter);
+  /* Fonts mapped to Next.js font variables */
+  --font-display: var(--font-newsreader);
+  --font-serif: var(--font-newsreader);
+  --font-sans: var(--font-montserrat);
+
+  --radius-none: 0px;
+
+  @keyframes loader-slide {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  --animate-loader-slide: loader-slide 1.5s infinite ease-in-out;
 }
 
 :root {
@@ -19,16 +36,47 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--color-navy);
+  background: var(--color-background-beige);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2,
 h3,
 h4,
-h5,
-h6 {
-  font-family: var(--font-serif);
+.font-display {
+  font-family: var(--font-display);
+}
+
+.reveal-text {
+  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.image-hover-zoom {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.group:hover .image-hover-zoom {
+  transform: scale(1.05);
+}
+
+/* Custom "VIEW" cursor style helper */
+.cursor-view {
+  cursor: crosshair; /* Fallback */
 }

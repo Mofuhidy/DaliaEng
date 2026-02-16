@@ -1,8 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useScroll, useTexture, Image as ImageDrei } from "@react-three/drei";
+import {
+  Image as ImageDrei,
+  MeshTransmissionMaterial,
+} from "@react-three/drei";
 import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -23,49 +26,47 @@ export default function GlassSlab({
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
-  const scroll = useScroll(); // Access scroll state from ScrollControls
 
   // Material refs for animating properties
-  const materialRef = useRef<THREE.MeshPhysicalMaterial>(null);
+  const materialRef = useRef<any>(null);
 
   useGSAP(() => {
-    // Entrance Animation: Float in from blurred/random state
-    if (groupRef.current && materialRef.current) {
+    // Entrance Animation: Slide in from the right with heavy elastic ease
+    if (groupRef.current) {
       gsap.from(groupRef.current.position, {
-        y: position[1] - 5,
-        z: position[2] - 2, // Start further back
-        duration: 2,
-        ease: "power3.out",
-        delay: index * 0.2, // Stagger
+        x: position[0] + 10,
+        opacity: 0,
+        duration: 2.5,
+        ease: "elastic.out(1, 0.8)",
+        delay: index * 0.15,
       });
 
       gsap.from(groupRef.current.rotation, {
-        x: rotation[0] + Math.random() * 0.5,
-        y: rotation[1] + Math.random() * 0.5,
-        duration: 2.5,
-        ease: "power2.out",
-        delay: index * 0.2,
+        y: rotation[1] + 1,
+        duration: 2,
+        ease: "power3.out",
+        delay: index * 0.15,
       });
-
-      // Fade in material opacity
-      gsap.fromTo(
-        materialRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.5, delay: index * 0.2 },
-      );
     }
   }, [position, rotation, index]);
 
   useFrame(state => {
     if (groupRef.current && meshRef.current) {
-      // Mouse Intearaction (Lerp)
-      // Calculating mouse influence based on normalized coordinates (-1 to 1)
+      // Mouse Interaction (Lerp)
       const mouseX = state.mouse.x * 0.5;
       const mouseY = state.mouse.y * 0.5;
 
-      // Target rotation combines original rotation + mouse influence
-      const targetRotX = rotation[0] + mouseY * 0.2;
-      const targetRotY = rotation[1] + mouseX * 0.2;
+      // Calculate scroll progress (0-1) based on hero visibility
+      const scrollProgress = Math.min(
+        Math.max(window.scrollY / (window.innerHeight || 1), 0),
+        1,
+      );
+
+      const scrollRotationY = index === 1 ? scrollProgress * Math.PI * 0.5 : 0;
+
+      // Target rotation combines original rotation + mouse influence + scroll morph
+      const targetRotX = rotation[0] + mouseY * 0.15;
+      const targetRotY = rotation[1] + mouseX * 0.15 + scrollRotationY;
 
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
@@ -78,54 +79,57 @@ export default function GlassSlab({
         0.05,
       );
 
-      // Scroll Linked Roughness & Color
-      if (scroll && materialRef.current) {
-        // As we scroll down (offset goes 0 -> 1), increase roughness
-        const targetRoughness = THREE.MathUtils.lerp(0.05, 0.5, scroll.offset);
+      // Scroll Linked Expansion & Material Properties
+      if (materialRef.current) {
+        // Smoothly increase roughness on scroll
+        const targetRoughness = THREE.MathUtils.lerp(0.05, 0.3, scrollProgress);
         materialRef.current.roughness = THREE.MathUtils.lerp(
           materialRef.current.roughness,
           targetRoughness,
-          0.1,
+          0.05,
         );
 
-        // Optional: Tint color towards Teal (#567c8d) on scroll
-        // Initial white: new THREE.Color('#ffffff')
-        // Target teal: new THREE.Color('#567c8d')
-        const white = new THREE.Color("#ffffff");
-        const teal = new THREE.Color("#567c8d");
-        materialRef.current.color.lerpColors(white, teal, scroll.offset * 0.8); // 0.8 to keep it subtle
+        if (index === 1) {
+          // Expansion morph for the Monolith
+          const targetScale = THREE.MathUtils.lerp(1, 3, scrollProgress);
+          groupRef.current.scale.setScalar(
+            THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale, 0.1),
+          );
+        }
       }
     }
   });
 
   return (
     <group ref={groupRef} position={position} rotation={rotation as any}>
-      {/* The Glass Slab */}
+      {/* The Glass Monolith */}
       <mesh ref={meshRef} castShadow receiveShadow>
-        <boxGeometry args={[3, 4, 0.2]} />{" "}
-        {/* Aspect ratio roughly 3:4 portrait */}
-        <meshPhysicalMaterial
+        <boxGeometry args={[3, 4, 0.1]} />
+        <MeshTransmissionMaterial
           ref={materialRef}
-          color="#ffffff"
-          transmission={1} // Glass-like transmission
-          thickness={2} // Refraction thickness
-          roughness={0.05} // Glossy glass
-          ior={1.5} // Index of Refraction for glass
+          thickness={0.4}
+          roughness={0.05}
+          transmission={1}
+          ior={1.2}
+          chromaticAberration={0.03}
+          anisotropy={0.1}
+          distortion={0.1}
+          distortionScale={0.5}
+          temporalDistortion={0.1}
           clearcoat={1}
-          clearcoatRoughness={0}
-          transparent
-          envMapIntensity={1}
+          attenuationDistance={1}
+          attenuationColor="#ffffff"
+          color="#ffffff"
         />
       </mesh>
 
       {/* The Image Behind the Glass */}
-      {/* Positioned slightly behind the slab so it's seen *through* it */}
       <ImageDrei
         url={image}
-        scale={[2.8, 3.8]} // Slightly smaller than slab
-        position={[0, 0, -0.15]}
+        scale={[2.9, 3.9]}
+        position={[0, 0, -0.1]}
         transparent
-        opacity={0.8}
+        opacity={1}
         toneMapped={false}
       />
     </group>
