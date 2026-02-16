@@ -92,16 +92,29 @@ export default function Hero3D() {
         {
           y: "110%",
           clipPath: "inset(0% 0% 100% 0%)",
+          opacity: 0,
         },
         {
           y: "0%",
           clipPath: "inset(0% 0% 0% 0%)",
+          opacity: 1,
           duration: 1.8,
-          stagger: 0.12,
-          ease: "expo.out",
+          stagger: 0.15,
+          ease: "power4.out",
           delay: 0.4,
         },
       );
+
+      // Horizontal "Stretch" (Space Expansion) effect on scroll
+      gsap.to(".hero-title-word", {
+        letterSpacing: "0.1em",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
 
       // Content fade in (Smooth Reveal)
       gsap.from(".hero-content-fade", {
@@ -136,7 +149,7 @@ export default function Hero3D() {
       <section
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative w-full md:w-1/2 min-h-[60vh] md:h-screen flex flex-col justify-center items-start p-8 md:p-16 lg:p-24 bg-background-beige border-b md:border-b-0 md:border-r border-sky-blue/30 z-20">
+        className="relative w-full md:w-1/2 min-h-[60vh] md:h-screen flex flex-col justify-center items-start p-8 md:p-16 lg:p-24 bg-background-beige border-b md:border-b-0 md:border-e border-sky-blue/30 z-20">
         {/* Background Grid Canvas */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
           <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
@@ -159,29 +172,31 @@ export default function Hero3D() {
           </div>
 
           {/* Main Title */}
-          <h2 className="font-display font-medium text-4xl md:text-5xl lg:text-7xl xl:text-8xl leading-[0.9] tracking-tight text-navy">
+          <h2 className="font-display font-medium text-4xl md:text-5xl lg:text-7xl xl:text-8xl  tracking-tight text-navy">
             {t("title")
               .split(" ")
               .map((word, i) => (
-                <span key={i} className="block overflow-hidden h-fit">
-                  <span className="block hero-title-word">{word}</span>
+                <span key={i} className="flex h-fit">
+                  <span>{word}</span>
                 </span>
               ))}
           </h2>
 
           {/* Excerpt */}
-          <p className="font-display italic text-base md:text-lg lg:text-xl leading-relaxed text-navy/80 max-w-sm hero-content-fade">
+          <p className="font-display italic text-base md:text-lg lg:text-xl leading-relaxed text-navy/80 max-w-sm hero-content-fade arabic-excerpt">
             {t("about_text")}
           </p>
 
           {/* CTA */}
           <div className="pt-4 hero-content-fade">
-            <button className="group relative overflow-hidden border-b-2 border-navy px-0 py-2 bg-transparent transition-all duration-500">
+            <a
+              href="#projects"
+              className="group relative inline-block overflow-hidden border-b-2 border-navy px-0 py-2 bg-transparent transition-all duration-500">
               <span className="relative flex items-center gap-4 font-sans text-xs font-bold tracking-[0.3em] text-navy uppercase">
                 {t("explore_works")}
                 <span className="w-8 h-px bg-navy transition-all duration-300 group-hover:w-12"></span>
               </span>
-            </button>
+            </a>
           </div>
         </div>
 

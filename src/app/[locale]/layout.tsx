@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Newsreader, Montserrat, IBM_Plex_Sans_Arabic } from "next/font/google";
+import {
+  Newsreader,
+  Montserrat,
+  Reem_Kufi,
+  IBM_Plex_Sans_Arabic,
+} from "next/font/google";
 import "../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
@@ -20,7 +25,14 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+const reemKufi = Reem_Kufi({
+  variable: "--font-reem-kufi",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-ibm-plex-arabic",
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700"],
@@ -28,8 +40,8 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "DaliaEng Interiors",
-  description: "Minimalist Luxury Interior Design Portfolio",
+  title: "Dalia Al Dukhain | Senior Interior Architect",
+  description: "Senior Interior Architecture Portfolio by Dalia Al Dukhain.",
   icons: {
     icon: [
       { url: "/BlackLogo.ico", media: "(prefers-color-scheme: light)" },
@@ -47,21 +59,17 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
 
-  // Validate that the incoming `locale` parameter is valid
   if (!["en", "ar"].includes(locale)) {
     notFound();
   }
 
-  // Providing all messages to the client
   const messages = await getMessages();
-
-  // RTL direction logic
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html lang={locale} dir={dir}>
       <body
-        className={`${newsreader.variable} ${montserrat.variable} ${ibmPlexSansArabic.variable} antialiased bg-canvas text-navy`}>
+        className={`${newsreader.variable} ${montserrat.variable} ${reemKufi.variable} ${ibmPlexArabic.variable} antialiased bg-canvas text-navy`}>
         <NextIntlClientProvider messages={messages}>
           <SmoothScroll>
             <Navbar />

@@ -42,7 +42,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   }[id] || { image: "/project-1.png", year: "" };
 
   return (
-    <main className="relative w-full min-h-screen pt-[60px] bg-background-beige text-navy antialiased">
+    <main className="relative w-full min-h-screen pt-[60px] bg-background-beige text-navy antialiased font-sans-arabic">
       {/* Hero Section */}
       <section className="relative w-full h-[70vh] overflow-hidden">
         <motion.div
@@ -165,7 +165,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           {/* Narrative Column */}
           <article className="lg:col-span-8 lg:col-start-5 flex flex-col gap-12 md:gap-20">
             <div className="max-w-prose">
-              <p className="text-base md:text-xl lg:text-2xl leading-relaxed text-navy font-display first-letter:text-6xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:mt-1">
+              <p className="text-base md:text-xl lg:text-2xl leading-relaxed text-navy font-display first-letter-drop first-letter:text-6xl first-letter:font-bold first-letter:mt-1">
                 {t_data("desc1")}
               </p>
               <p className="mt-8 text-base md:text-lg leading-relaxed text-navy/70 font-display">

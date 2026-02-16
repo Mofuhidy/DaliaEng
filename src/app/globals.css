@@ -81,22 +81,43 @@ h4,
   cursor: crosshair; /* Fallback */
 }
 
+/* Font Utilities */
+.font-arabic-display {
+  font-family: var(--font-reem-kufi), serif;
+}
+
+.font-arabic-sans,
 .font-sans-arabic {
   font-family: var(--font-ibm-plex-arabic), sans-serif;
 }
 
-[dir="rtl"] .font-sans-arabic {
+/* Luxury Hierarchy Utilities */
+[dir="rtl"] body {
   font-family: var(--font-ibm-plex-arabic), sans-serif;
 }
 
+[dir="rtl"] .font-display {
+  font-family: var(--font-reem-kufi), serif;
+}
+
+.arabic-excerpt {
+  opacity: 0.8;
+}
+
+.blend-text {
+  mix-blend-mode: difference;
+  color: white; /* Contrast for difference mode */
+}
+
 /* RTL Drop Cap Fix */
-[dir="rtl"] .first-letter-drop::first-letter {
-  float: right;
-  margin-left: 0.75rem;
-  margin-right: 0;
+html[dir="rtl"] .first-letter-drop::first-letter {
+  float: right !important;
+  margin-left: 1.5rem !important;
+  margin-right: 0 !important;
+  font-family: var(--font-reem-kufi), serif;
 }
 
 .first-letter-drop::first-letter {
   float: left;
-  margin-right: 0.75rem;
+  margin-right: 1rem;
 }

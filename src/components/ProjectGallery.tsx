@@ -84,6 +84,7 @@ export default function ProjectGallery() {
 
   return (
     <div
+      id="projects"
       ref={containerRef}
       className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
       <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
