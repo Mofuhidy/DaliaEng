@@ -5,29 +5,50 @@ import { useFrame } from "@react-three/fiber";
 import GlassSlab from "./GlassSlab";
 import * as THREE from "three";
 
-const projects = [
+import { SanityProject } from "@/types/sanity";
+import { urlForImage } from "@/sanity/lib/image";
+
+const staticProjects = [
   {
-    id: 1,
+    id: "1",
     image: "/project-1.png",
     position: [-2.5, 0, 0],
     rotation: [0, 0.2, 0],
   },
   {
-    id: 2,
+    id: "2",
     image: "/project-2.png",
     position: [0, 0, 1],
     rotation: [0, 0, 0],
   },
   {
-    id: 3,
+    id: "3",
     image: "/project-3.png",
     position: [2.5, 0, 0],
     rotation: [0, -0.2, 0],
   },
 ];
 
-export default function FloatingGallery() {
+export default function FloatingGallery({
+  projects: sanityProjects,
+}: {
+  projects?: SanityProject[];
+}) {
   const groupRef = useRef<THREE.Group>(null);
+
+  // Merge sanity projects with static ones, or use sanity projects if they exist
+  // We only show 3 projects in the hero gallery
+  const displayProjects =
+    sanityProjects && sanityProjects.length > 0
+      ? sanityProjects.slice(0, 3).map((p, i) => ({
+          id: p._id,
+          image: p.mainImage
+            ? urlForImage(p.mainImage)?.url()
+            : staticProjects[i].image,
+          position: staticProjects[i].position,
+          rotation: staticProjects[i].rotation,
+        }))
+      : staticProjects;
 
   useFrame(state => {
     if (groupRef.current) {
@@ -39,13 +60,13 @@ export default function FloatingGallery() {
 
   return (
     <group ref={groupRef}>
-      {projects.map((project, index) => (
+      {displayProjects.map((project, index) => (
         <GlassSlab
           key={project.id}
           index={index}
           position={project.position as [number, number, number]}
           rotation={project.rotation as [number, number, number]}
-          image={project.image}
+          image={project.image || "/project-1.png"}
         />
       ))}
     </group>
