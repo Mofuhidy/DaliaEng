@@ -74,7 +74,13 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function Hero3D() {
+import { SanityProject } from "@/types/sanity";
+
+export default function Hero3D({
+  initialProjects,
+}: {
+  initialProjects?: SanityProject[];
+}) {
   // Retained Hero3D as the default export
   const t = useTranslations("HomePage");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -237,7 +243,7 @@ export default function Hero3D() {
                 color="#ffffff"
               />
 
-              <FloatingGallery />
+              <FloatingGallery projects={initialProjects} />
 
               <ContactShadows
                 position={[0, -3.5, 0]}
