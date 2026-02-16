@@ -1,15 +1,10 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef, useState, useMemo } from "react";
+import { Suspense, useRef, useState } from "react";
 import { Html, ContactShadows, Grid } from "@react-three/drei";
 import { useTranslations } from "next-intl";
-import {
-  EffectComposer,
-  Bloom,
-  Noise,
-  Vignette,
-} from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import FloatingGallery from "./FloatingGallery";
 import Loader from "./Loader";
 import * as THREE from "three";
@@ -17,6 +12,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useFrame } from "@react-three/fiber";
+import { MeshTransmissionMaterial } from "@react-three/drei"; // Added import for MeshTransmissionMaterial
 
 function BlueprintGrid({ isHovered }: { isHovered: boolean }) {
   const gridRef = useRef<THREE.Group>(null);
@@ -61,7 +57,7 @@ function GlassDivider() {
   return (
     <mesh position={[0, 0, 0]}>
       <boxGeometry args={[0.02, 10, 5]} />
-      <meshPhysicalMaterial
+      <MeshTransmissionMaterial // Changed to MeshTransmissionMaterial
         color="#c8d9e6"
         transparent
         opacity={0.8}
@@ -79,6 +75,7 @@ if (typeof window !== "undefined") {
 }
 
 export default function Hero3D() {
+  // Retained Hero3D as the default export
   const t = useTranslations("HomePage");
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);

@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import { useScroll } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import GlassSlab from "./GlassSlab";
 import * as THREE from "three";
 

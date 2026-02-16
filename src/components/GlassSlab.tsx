@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import {
   Image as ImageDrei,
   MeshTransmissionMaterial,
@@ -25,10 +25,9 @@ export default function GlassSlab({
 }: GlassSlabProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
-  const { viewport } = useThree();
 
   // Material refs for animating properties
-  const materialRef = useRef<any>(null);
+  const materialRef = useRef<THREE.MeshPhysicalMaterial>(null);
 
   useGSAP(() => {
     // Entrance Animation: Slide in from the right with heavy elastic ease
@@ -101,12 +100,13 @@ export default function GlassSlab({
   });
 
   return (
-    <group ref={groupRef} position={position} rotation={rotation as any}>
+    <group ref={groupRef} position={position} rotation={rotation}>
       {/* The Glass Monolith */}
       <mesh ref={meshRef}>
         <boxGeometry args={[3, 4, 0.1]} />
         <MeshTransmissionMaterial
-          ref={materialRef}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ref={materialRef as any}
           thickness={0.4}
           roughness={0.05}
           transmission={1}

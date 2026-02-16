@@ -21,8 +21,24 @@ export async function generateMetadata({
   };
 }
 
-export default async function Home() {
+import { client } from "@/sanity/lib/client";
+import { projectsQuery } from "@/sanity/lib/queries";
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const t = await getTranslations("HomePage");
+
+  // Try to fetch from Sanity, catch if project not yet set up
+  let initialProjects = [];
+  try {
+    initialProjects = await client.fetch(projectsQuery);
+  } catch {
+    console.warn("Sanity fetch failed, falling back to static data.");
+  }
 
   return (
     <main className="w-full min-h-screen bg-background-beige select-none">
@@ -35,7 +51,7 @@ export default async function Home() {
       <section
         id="projects"
         className="min-h-screen bg-background-beige flex flex-col items-center justify-center py-24">
-        <ProjectGallery />
+        <ProjectGallery initialProjects={initialProjects} locale={locale} />
       </section>
 
       {/* Closing Statement / Contact */}

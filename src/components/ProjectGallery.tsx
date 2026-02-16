@@ -11,11 +11,22 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function ProjectGallery() {
+import { SanityProject } from "@/types/sanity";
+import { urlForImage } from "@/sanity/lib/image";
+
+interface ProjectGalleryProps {
+  initialProjects?: SanityProject[];
+  locale?: string;
+}
+
+export default function ProjectGallery({
+  initialProjects,
+  locale,
+}: ProjectGalleryProps) {
   const t = useTranslations("HomePage");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const projects = [
+  const staticProjects = [
     {
       id: "1",
       title: t("project_1_title"),
@@ -23,6 +34,7 @@ export default function ProjectGallery() {
       location: t("project_1_location"),
       image: "/project-1.png",
       year: "2023",
+      slug: "1",
     },
     {
       id: "2",
@@ -31,6 +43,7 @@ export default function ProjectGallery() {
       location: t("project_2_location"),
       image: "/project-2.png",
       year: "2024",
+      slug: "2",
     },
     {
       id: "3",
@@ -39,24 +52,39 @@ export default function ProjectGallery() {
       location: t("project_3_location"),
       image: "/project-3.png",
       year: "2023",
+      slug: "3",
     },
     {
       id: "4",
       title: t("project_4_title"),
       category: t("project_4_category"),
       location: t("project_4_location"),
-      image: "/project-1.png", // Reusing image 1 for demo
+      image: "/project-1.png",
       year: "2024",
+      slug: "4",
     },
   ];
+
+  const projects = initialProjects?.length
+    ? initialProjects.map(p => ({
+        id: p._id,
+        title: locale === "ar" ? p.titleAr : p.title,
+        category: locale === "ar" ? p.categoryAr : p.category,
+        location: locale === "ar" ? p.locationAr : p.location,
+        image: p.mainImage ? urlForImage(p.mainImage)?.url() : "/project-1.png",
+        year: p.year,
+        slug: p.slug,
+      }))
+    : staticProjects;
 
   useGSAP(
     () => {
       const items = gsap.utils.toArray(".project-item");
 
-      items.forEach((item: any, i: number) => {
+      items.forEach((item: unknown, i: number) => {
+        const el = item as HTMLElement;
         gsap.fromTo(
-          item,
+          el,
           {
             opacity: 0,
             y: 60,
@@ -70,7 +98,7 @@ export default function ProjectGallery() {
             duration: 1.2,
             ease: "power4.out",
             scrollTrigger: {
-              trigger: item,
+              trigger: el,
               start: "top 92%", // Trigger earlier on mobile
               toggleActions: "play none none none",
             },
@@ -106,7 +134,7 @@ export default function ProjectGallery() {
             <div className="relative w-full overflow-hidden bg-white p-3 shadow-sm border border-black/5 hover:shadow-2xl transition-all duration-700 ease-out">
               <div className="aspect-[4/5] md:aspect-[3/4] lg:aspect-[9/12] w-full overflow-hidden bg-gray-100">
                 <ProjectCard
-                  id={project.id}
+                  id={project.slug}
                   title={project.title}
                   image={project.image}
                 />

@@ -1,16 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-import {
-  Decal,
-  useTexture,
-  AccumulativeShadows,
-  RandomizedLight,
-} from "@react-three/drei";
+import { useFrame, ThreeElements } from "@react-three/fiber";
+import { AccumulativeShadows, RandomizedLight } from "@react-three/drei";
 import * as THREE from "three";
 
-export default function FurnitureModel(props: any) {
+export default function FurnitureModel(props: ThreeElements["group"]) {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame(state => {
