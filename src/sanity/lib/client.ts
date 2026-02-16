@@ -1,5 +1,3 @@
-/* eslint-disable */
-// @ts-ignore
 import { createClient } from "next-sanity";
 import { apiVersion, dataset, projectId } from "../env";
 

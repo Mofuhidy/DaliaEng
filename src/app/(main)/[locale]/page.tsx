@@ -5,10 +5,11 @@ import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "HomePage" });
   return {
     title: t("title"),
@@ -78,7 +79,7 @@ export default async function Home({
 
             <a
               href="mailto:daliataleb550@gmail.com"
-              className="text-2xl md:text-4xl lg:text-5xl font-sans font-light tracking-tighter hover:text-primary transition-all duration-500 underline underline-offset-[16px] decoration-navy/10 hover:decoration-primary">
+              className="text-2xl md:text-4xl lg:text-5xl font-sans font-light tracking-tighter hover:text-primary transition-all duration-500 underline underline-offset-16 decoration-navy/10 hover:decoration-primary">
               Dalia Al Dukhain
             </a>
           </div>
