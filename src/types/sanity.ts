@@ -23,4 +23,5 @@ export interface SanityProject {
   quoteAr?: string;
   caption?: string;
   captionAr?: string;
+  gallery?: { asset: { _ref: string; _type: "reference" } }[];
 }

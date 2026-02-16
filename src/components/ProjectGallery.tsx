@@ -132,7 +132,7 @@ export default function ProjectGallery({
             key={`${project.id}-${index}`}
             className={`project-item flex flex-col mb-12 group cursor-pointer ${index % 2 === 1 ? "md:mt-32" : ""}`}>
             <div className="relative w-full overflow-hidden bg-white p-3 shadow-sm border border-black/5 hover:shadow-2xl transition-all duration-700 ease-out">
-              <div className="aspect-[4/5] md:aspect-[3/4] lg:aspect-[9/12] w-full overflow-hidden bg-gray-100">
+              <div className="aspect-4/5 md:aspect-3/4 lg:aspect-9/12 w-full overflow-hidden bg-gray-100">
                 <ProjectCard
                   id={project.slug}
                   title={project.title}

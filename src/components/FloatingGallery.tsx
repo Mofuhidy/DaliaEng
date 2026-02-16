@@ -38,17 +38,48 @@ export default function FloatingGallery({
 
   // Merge sanity projects with static ones, or use sanity projects if they exist
   // We only show 3 projects in the hero gallery
-  const displayProjects =
-    sanityProjects && sanityProjects.length > 0
-      ? sanityProjects.slice(0, 3).map((p, i) => ({
-          id: p._id,
-          image: p.mainImage
-            ? urlForImage(p.mainImage)?.url()
-            : staticProjects[i].image,
-          position: staticProjects[i].position,
-          rotation: staticProjects[i].rotation,
-        }))
-      : staticProjects;
+  // Ensure 3 items always by merging Sanity projects with static placeholders
+  // Priority Mapping: Center (1) -> Left (0) -> Right (2) to keep main project in middle
+  const displayProjects = [...staticProjects];
+
+  if (sanityProjects && sanityProjects.length > 0) {
+    // 1. Assign first project to Center (index 1) which is "Project 2" statically
+    // We override id and image, keep position/rotation
+    if (sanityProjects[0]) {
+      displayProjects[1] = {
+        ...staticProjects[1],
+        id: sanityProjects[0]._id,
+        image: sanityProjects[0].mainImage
+          ? urlForImage(sanityProjects[0].mainImage)?.url() ||
+            staticProjects[1].image
+          : staticProjects[1].image,
+      };
+    }
+
+    // 2. Assign second project to Left (index 0)
+    if (sanityProjects[1]) {
+      displayProjects[0] = {
+        ...staticProjects[0],
+        id: sanityProjects[1]._id,
+        image: sanityProjects[1].mainImage
+          ? urlForImage(sanityProjects[1].mainImage)?.url() ||
+            staticProjects[0].image
+          : staticProjects[0].image,
+      };
+    }
+
+    // 3. Assign third project to Right (index 2)
+    if (sanityProjects[2]) {
+      displayProjects[2] = {
+        ...staticProjects[2],
+        id: sanityProjects[2]._id,
+        image: sanityProjects[2].mainImage
+          ? urlForImage(sanityProjects[2].mainImage)?.url() ||
+            staticProjects[2].image
+          : staticProjects[2].image,
+      };
+    }
+  }
 
   useFrame(state => {
     if (groupRef.current) {
@@ -62,7 +93,7 @@ export default function FloatingGallery({
     <group ref={groupRef}>
       {displayProjects.map((project, index) => (
         <GlassSlab
-          key={project.id}
+          key={project.id || index}
           index={index}
           position={project.position as [number, number, number]}
           rotation={project.rotation as [number, number, number]}

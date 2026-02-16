@@ -56,6 +56,15 @@ export const projectType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "gallery",
+      title: "Project Gallery",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+      options: {
+        layout: "grid",
+      },
+    }),
+    defineField({
       name: "year",
       title: "Year",
       type: "string",

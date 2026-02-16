@@ -109,7 +109,7 @@ export default function ProjectDetailClient({
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${image})` }}>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
         </motion.div>
 
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 text-white z-10 max-w-5xl">
@@ -225,7 +225,7 @@ export default function ProjectDetailClient({
             </div>
 
             <figure className="w-full overflow-hidden">
-              <div className="relative aspect-[16/10] bg-gray-100 overflow-hidden">
+              <div className="relative aspect-16/10 bg-gray-100 overflow-hidden">
                 <Image
                   src={image!}
                   alt={title!}
@@ -237,6 +237,38 @@ export default function ProjectDetailClient({
                 {caption}
               </figcaption>
             </figure>
+
+            {/* Gallery Section */}
+            {isSanity &&
+              projectData?.gallery &&
+              projectData.gallery.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 my-12">
+                  {projectData.gallery.map((img, index) => {
+                    const imgUrl = urlForImage(img)?.url();
+                    if (!imgUrl) return null;
+                    return (
+                      <motion.div
+                        key={img.asset._ref || index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        className={`relative w-full overflow-hidden ${
+                          index % 3 === 0
+                            ? "md:col-span-2 aspect-21/9"
+                            : "aspect-4/5"
+                        }`}>
+                        <Image
+                          src={imgUrl}
+                          alt={`Gallery Image ${index + 1}`}
+                          fill
+                          className="object-cover transition-transform duration-700 hover:scale-105"
+                        />
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
 
             <div className="py-16 md:py-24 flex flex-col items-center gap-8 border-y border-sky-blue/20">
               <blockquote className="text-2xl md:text-3xl lg:text-4xl font-display italic text-center text-navy leading-tight px-4 max-w-3xl">

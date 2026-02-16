@@ -12,6 +12,7 @@ export const projectsQuery = groq`*[_type == "project"] | order(year desc) {
   location,
   locationAr,
   mainImage,
+  gallery,
   year
 }`;
 

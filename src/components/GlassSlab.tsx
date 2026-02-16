@@ -47,7 +47,15 @@ export default function GlassSlab({
         delay: index * 0.15,
       });
     }
-  }, [position, rotation, index]);
+  }, [
+    position[0],
+    position[1],
+    position[2],
+    rotation[0],
+    rotation[1],
+    rotation[2],
+    index,
+  ]);
 
   useFrame(state => {
     if (groupRef.current && meshRef.current) {

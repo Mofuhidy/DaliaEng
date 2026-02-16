@@ -14,21 +14,18 @@ interface ProjectPageProps {
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id, locale } = await params;
 
-  // Static fallback check
-  const isStaticId = id === "1" || id === "2" || id === "3" || id === "4";
-
+  // Always try to fetch from Sanity first
   let projectData: SanityProject | null = null;
-
-  if (!isStaticId) {
-    try {
-      projectData = await client.fetch(projectByIdQuery, { slug: id });
-    } catch {
-      console.warn("Sanity fetch failed for project detail:", id);
-    }
+  try {
+    projectData = await client.fetch(projectByIdQuery, { slug: id });
+  } catch (error) {
+    console.warn("Sanity fetch failed for project detail:", id, error);
   }
 
-  // If not static and no data found in Sanity
-  if (!isStaticId && !projectData) {
+  // Static fallback IDs
+  const isStaticId = ["1", "2", "3", "4"].includes(id);
+
+  if (!projectData && !isStaticId) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center bg-background-beige text-navy p-12">
         <h1 className="text-4xl font-display mb-8">Project Not Found</h1>
