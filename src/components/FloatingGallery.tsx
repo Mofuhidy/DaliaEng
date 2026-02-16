@@ -29,17 +29,12 @@ const projects = [
 
 export default function FloatingGallery() {
   const groupRef = useRef<THREE.Group>(null);
-  const scroll = useScroll();
 
-  useFrame((state, delta) => {
+  useFrame(state => {
     if (groupRef.current) {
       // Gentle floating for the entire gallery
       const t = state.clock.getElapsedTime();
-      groupRef.current.position.y = Math.sin(t * 0.5) * 0.2;
-
-      if (scroll) {
-        // Only vertical shift if needed, but let's keep it simple
-      }
+      groupRef.current.position.y = Math.sin(t * 0.5) * 0.15;
     }
   });
 

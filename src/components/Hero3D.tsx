@@ -66,7 +66,7 @@ export default function Hero3D() {
       className="w-full min-h-screen flex flex-col md:flex-row bg-background-beige overflow-hidden">
       {/* Left Panel: Editorial Content */}
       <section className="relative w-full md:w-1/2 min-h-[50vh] md:h-screen flex flex-col justify-center items-start p-8 md:p-16 lg:p-24 bg-background-beige border-b md:border-b-0 md:border-r border-sky-blue/30 z-20">
-        <div className="max-w-md lg:max-w-lg w-full flex flex-col items-start gap-4 md:gap-6 mt-16 md:mt-0 hero-content-reveal">
+        <div className="max-w-md lg:max-w-lg w-full flex flex-col items-start gap-4 md:gap-6 mt-32 md:mt-40 hero-content-reveal">
           {/* Eyebrow */}
           <div className="flex items-center gap-3 hero-content-fade">
             <span className="h-px w-8 bg-sky-blue"></span>
@@ -76,7 +76,7 @@ export default function Hero3D() {
           </div>
 
           {/* Main Title */}
-          <h2 className="font-display font-medium text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1] tracking-tight text-navy">
+          <h2 className="font-display font-medium text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight text-navy">
             {t("title")
               .split(" ")
               .map((word, i) => (

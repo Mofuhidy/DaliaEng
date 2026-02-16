@@ -28,6 +28,56 @@
     "footer_desc": "Creating timeless spaces that blend minimalist luxury with functional harmony.",
     "rights": "All rights reserved.",
     "designed_by": "Designed by Anivo",
-    "about_text": "A monolithic structure rising from the cliffs, redefining the relationship between raw material and refined living through architectural precision and organic textures."
+    "about_text": "A monolithic structure rising from the cliffs, redefining the relationship between raw material and refined living through architectural precision and organic textures.",
+    "collab_subtitle": "Let's redefine the relationship between space and self."
+  },
+  "ProjectDetail": {
+    "client": "Client",
+    "architect": "Architect",
+    "year": "Year",
+    "location": "Location",
+    "materials": "Materials",
+    "next_project": "Next Project",
+    "view_case_study": "View Case Study",
+    "share_project": "Share Project",
+    "back_to_index": "Back to Index"
+  },
+  "ProjectData": {
+    "1": {
+      "client": "Private Commission",
+      "architect": "Dalia Al Dukhain",
+      "materials": "Natural Stone, Oak Wood, Glass",
+      "desc1": "A dialogue between permanence and ephemerality. The structure does not seek to dominate its landscape but rather to anchor itself within it, acting as a geological formation born from the earth itself.",
+      "desc2": "Light plays a critical role in the architectural narrative. We oriented the primary apertures to capture the natural rhythm of the sun, allowing long shadows to stretch across the raw textures.",
+      "quote": "Light is not a feature; it is a material we carve to reveal the soul of the space.",
+      "caption": "Contextual view of the architectural intervention."
+    },
+    "2": {
+      "client": "Estate Group",
+      "architect": "Dalia Al Dukhain",
+      "materials": "Brushed Steel, Marble, Velvet",
+      "desc1": "An urban sanctuary that redefines vertical living. This project explores the intersection of high-density housing and private tranquility through layered materiality.",
+      "desc2": "The interior palette uses muted tones to amplify the sense of space, while bespoke joinery ensures every square inch serves a functional purpose without sacrificing aesthetic purity.",
+      "quote": "Elegance is the balance between what is seen and what is felt.",
+      "caption": "Detailing the intersection of cold steel and warm marble."
+    },
+    "3": {
+      "client": "Boutique Group",
+      "architect": "Dalia Al Dukhain",
+      "materials": "Terrazzo, Copper, Linen",
+      "desc1": "A retail experience designed as an art gallery. Every interaction is curated to slow down the visitor, creating a physical manifestation of the brand's heritage.",
+      "desc2": "Soft lighting and organic shapes guide the flow, making the transition from the busy street to the serene interior an act of decompression.",
+      "quote": "Silence is the highest form of luxury in a crowded world.",
+      "caption": "A study in retail choreography and material rhythm."
+    },
+    "4": {
+      "client": "Family Trust",
+      "architect": "Dalia Al Dukhain",
+      "materials": "Limestone, Cedar, Glass",
+      "desc1": "Stripping away the non-essential to amplify texture, proportion, light, and shadow. It is a home designed not just for living, but for contemplation.",
+      "desc2": "The interplay of heavy stone and weightless glass creates a tension that defines the experience of moving through the house.",
+      "quote": "Contemplation requires a container that is both solid and transparent.",
+      "caption": "The transition between the weight of earth and the lightness of air."
+    }
   }
 }

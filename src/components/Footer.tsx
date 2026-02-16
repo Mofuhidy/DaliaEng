@@ -36,10 +36,10 @@ export default function Footer() {
             Instagram
           </a>
           <a
-            href={`mailto:hello@daliaeng.com`}
+            href={`mailto:daliataleb550@gmail.com`}
             target="_blank"
             className="hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1 italic lowercase tracking-normal">
-            hello@daliaeng.com
+            Dalia Al Dukhain
           </a>
         </div>
       </div>
@@ -49,7 +49,13 @@ export default function Footer() {
           © {new Date().getFullYear()} {t("title")}
         </span>
         <span>{t("rights")}</span>
-        <span>{t("designed_by")}</span>
+        <a
+          href="https://www.linkedin.com/in/mofuhidy/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-primary transition-colors cursor-pointer">
+          {t("designed_by")}
+        </a>
       </div>
     </footer>
   );

@@ -55,15 +55,15 @@ export default async function Home() {
 
           <div className="flex flex-col items-center gap-8">
             <p className="font-display italic text-2xl md:text-3xl text-navy/70 max-w-2xl">
-              Let's redefine the relationship between space and self.
+              {t("collab_subtitle")}
             </p>
 
             <div className="h-px w-full bg-navy/10"></div>
 
             <a
-              href="mailto:hello@daliaeng.com"
+              href="mailto:daliataleb550@gmail.com"
               className="text-2xl md:text-4xl lg:text-5xl font-sans font-light tracking-tighter hover:text-primary transition-all duration-500 underline underline-offset-[16px] decoration-navy/10 hover:decoration-primary">
-              hello@daliaeng.com
+              Dalia Al Dukhain
             </a>
           </div>
         </div>
