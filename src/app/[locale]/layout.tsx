@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Newsreader, Montserrat } from "next/font/google";
+import { Newsreader, Montserrat, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
@@ -17,6 +17,13 @@ const newsreader = Newsreader({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-ibm-plex-arabic",
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -54,7 +61,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <body
-        className={`${newsreader.variable} ${montserrat.variable} antialiased bg-canvas text-navy`}>
+        className={`${newsreader.variable} ${montserrat.variable} ${ibmPlexSansArabic.variable} antialiased bg-canvas text-navy`}>
         <NextIntlClientProvider messages={messages}>
           <SmoothScroll>
             <Navbar />

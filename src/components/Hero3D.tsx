@@ -1,8 +1,8 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
-import { Html, ContactShadows } from "@react-three/drei";
+import { Suspense, useRef, useState, useMemo } from "react";
+import { Html, ContactShadows, Grid } from "@react-three/drei";
 import { useTranslations } from "next-intl";
 import {
   EffectComposer,
@@ -16,6 +16,63 @@ import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useFrame } from "@react-three/fiber";
+
+function BlueprintGrid({ isHovered }: { isHovered: boolean }) {
+  const gridRef = useRef<THREE.Group>(null);
+  const opacity = useRef(0);
+
+  useFrame((state, delta) => {
+    // Smoothly transition opacity
+    opacity.current = THREE.MathUtils.lerp(
+      opacity.current,
+      isHovered ? 0.35 : 0,
+      delta * 4,
+    );
+    if (gridRef.current) {
+      gridRef.current.children.forEach(child => {
+        if (child instanceof THREE.LineSegments) {
+          (child.material as THREE.LineBasicMaterial).opacity = opacity.current;
+        }
+      });
+      gridRef.current.rotation.y = state.pointer.x * 0.1;
+      gridRef.current.rotation.x = -state.pointer.y * 0.1;
+    }
+  });
+
+  return (
+    <group ref={gridRef}>
+      <Grid
+        infiniteGrid
+        fadeDistance={20}
+        sectionSize={3}
+        sectionThickness={1}
+        sectionColor="#567c8d"
+        cellColor="#567c8d"
+        cellSize={1}
+        position={[0, 0, -5]}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+    </group>
+  );
+}
+
+function GlassDivider() {
+  return (
+    <mesh position={[0, 0, 0]}>
+      <boxGeometry args={[0.02, 10, 5]} />
+      <meshPhysicalMaterial
+        color="#c8d9e6"
+        transparent
+        opacity={0.8}
+        roughness={0}
+        transmission={1}
+        thickness={0.5}
+        ior={1.5}
+      />
+    </mesh>
+  );
+}
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -24,36 +81,47 @@ if (typeof window !== "undefined") {
 export default function Hero3D() {
   const t = useTranslations("HomePage");
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useGSAP(
     () => {
-      // Title Stagger Animation
+      // Title "Etched" Reveal Animation
       const words = gsap.utils.toArray(".hero-title-word");
-      gsap.from(words, {
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.1,
-        ease: "power4.out",
-        delay: 0.5,
-      });
+      gsap.fromTo(
+        words,
+        {
+          y: "110%",
+          clipPath: "inset(0% 0% 100% 0%)",
+        },
+        {
+          y: "0%",
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 1.8,
+          stagger: 0.12,
+          ease: "expo.out",
+          delay: 0.4,
+        },
+      );
 
-      // Content fade in
+      // Content fade in (Smooth Reveal)
       gsap.from(".hero-content-fade", {
         opacity: 0,
+        y: 20,
+        filter: "blur(10px)",
         duration: 1.5,
         delay: 1.2,
         stagger: 0.15,
+        ease: "power2.out",
       });
 
       // Parallax effect on the content side
       gsap.to(".hero-content-reveal", {
-        y: -50,
+        y: -100,
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         },
       });
     },
@@ -65,18 +133,33 @@ export default function Hero3D() {
       ref={containerRef}
       className="w-full min-h-screen flex flex-col md:flex-row bg-background-beige overflow-hidden">
       {/* Left Panel: Editorial Content */}
-      <section className="relative w-full md:w-1/2 min-h-[50vh] md:h-screen flex flex-col justify-center items-start p-8 md:p-16 lg:p-24 bg-background-beige border-b md:border-b-0 md:border-r border-sky-blue/30 z-20">
-        <div className="max-w-md lg:max-w-lg w-full flex flex-col items-start gap-4 md:gap-6 mt-32 md:mt-40 hero-content-reveal">
+      <section
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative w-full md:w-1/2 min-h-[60vh] md:h-screen flex flex-col justify-center items-start p-8 md:p-16 lg:p-24 bg-background-beige border-b md:border-b-0 md:border-r border-sky-blue/30 z-20">
+        {/* Background Grid Canvas */}
+        <div className="absolute inset-0 pointer-events-none opacity-40">
+          <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+            <ambientLight intensity={0.5} />
+            <pointLight position={[2, 2, 2]} intensity={10} color="#567c8d" />
+            <BlueprintGrid isHovered={isHovered} />
+            <group position={[3.5, 0, -2]}>
+              <GlassDivider />
+            </group>
+          </Canvas>
+        </div>
+
+        <div className="relative max-w-md lg:max-w-lg w-full flex flex-col items-start gap-4 md:gap-6 mt-24 md:mt-40 hero-content-reveal font-sans-arabic">
           {/* Eyebrow */}
           <div className="flex items-center gap-3 hero-content-fade">
-            <span className="h-px w-8 bg-sky-blue"></span>
+            <span className="h-px w-8 bg-primary"></span>
             <span className="font-sans text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-navy font-bold">
               {t("issue_label")}
             </span>
           </div>
 
           {/* Main Title */}
-          <h2 className="font-display font-medium text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.95] tracking-tight text-navy">
+          <h2 className="font-display font-medium text-4xl md:text-5xl lg:text-7xl xl:text-8xl leading-[0.9] tracking-tight text-navy">
             {t("title")
               .split(" ")
               .map((word, i) => (
@@ -87,27 +170,16 @@ export default function Hero3D() {
           </h2>
 
           {/* Excerpt */}
-          <p className="font-display italic text-sm md:text-base lg:text-lg leading-relaxed text-navy/70 max-w-sm hero-content-fade">
+          <p className="font-display italic text-base md:text-lg lg:text-xl leading-relaxed text-navy/80 max-w-sm hero-content-fade">
             {t("about_text")}
           </p>
 
           {/* CTA */}
-          <div className="pt-2 hero-content-fade">
-            <button className="group relative overflow-hidden border border-navy/20 px-6 py-3 md:px-8 md:py-4 bg-transparent transition-all duration-500 hover:border-navy">
-              <span className="relative flex items-center gap-3 font-sans text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-navy uppercase">
+          <div className="pt-4 hero-content-fade">
+            <button className="group relative overflow-hidden border-b-2 border-navy px-0 py-2 bg-transparent transition-all duration-500">
+              <span className="relative flex items-center gap-4 font-sans text-xs font-bold tracking-[0.3em] text-navy uppercase">
                 {t("explore_works")}
-                <svg
-                  className="w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
+                <span className="w-8 h-px bg-navy transition-all duration-300 group-hover:w-12"></span>
               </span>
             </button>
           </div>
@@ -120,7 +192,7 @@ export default function Hero3D() {
       </section>
 
       {/* Right Panel: 3D Immersive Scene */}
-      <section className="relative w-full md:w-1/2 h-[60vh] md:h-screen bg-[#0a0f14] overflow-hidden">
+      <section className="relative w-full md:w-1/2 h-[60vh] md:h-screen bg-background-beige overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Canvas
             camera={{ position: [0, 0, 8], fov: 35 }}
@@ -131,7 +203,7 @@ export default function Hero3D() {
               alpha: true,
               powerPreference: "high-performance",
             }}>
-            <color attach="background" args={["#0a0f14"]} />
+            <color attach="background" args={["#f5efeb"]} />
             <Suspense
               fallback={
                 <Html center>
