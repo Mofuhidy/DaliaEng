@@ -5,7 +5,7 @@ import {
   Reem_Kufi,
   IBM_Plex_Sans_Arabic,
 } from "next/font/google";
-import "../globals.css";
+import "../../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import { NextIntlClientProvider } from "next-intl";
