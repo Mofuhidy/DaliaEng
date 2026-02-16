@@ -30,22 +30,14 @@ export default function Footer() {
 
         <div className="flex flex-wrap gap-x-12 gap-y-6 text-sm font-sans uppercase tracking-[0.2em] text-white/80">
           <a
-            href="#"
+            href="https://www.instagram.com/dalia_aldukhain/"
+            target="_blank"
             className="hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1">
             Instagram
           </a>
           <a
-            href="#"
-            className="hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1">
-            Pinterest
-          </a>
-          <a
-            href="#"
-            className="hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1">
-            LinkedIn
-          </a>
-          <a
             href={`mailto:hello@daliaeng.com`}
+            target="_blank"
             className="hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1 italic lowercase tracking-normal">
             hello@daliaeng.com
           </a>

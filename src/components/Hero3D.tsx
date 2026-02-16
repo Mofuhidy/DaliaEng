@@ -2,12 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
-import {
-  ScrollControls,
-  Html,
-  Environment,
-  ContactShadows,
-} from "@react-three/drei";
+import { Html, ContactShadows } from "@react-three/drei";
 import { useTranslations } from "next-intl";
 import {
   EffectComposer,
@@ -128,10 +123,14 @@ export default function Hero3D() {
       <section className="relative w-full md:w-1/2 h-[60vh] md:h-screen bg-[#0a0f14] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Canvas
-            shadows
             camera={{ position: [0, 0, 8], fov: 35 }}
-            dpr={[1, 2]}
-            gl={{ antialias: true, alpha: true }}>
+            dpr={[1, 1.5]}
+            performance={{ min: 0.5 }}
+            gl={{
+              antialias: false,
+              alpha: true,
+              powerPreference: "high-performance",
+            }}>
             <color attach="background" args={["#0a0f14"]} />
             <Suspense
               fallback={
@@ -139,17 +138,20 @@ export default function Hero3D() {
                   <Loader />
                 </Html>
               }>
-              <Environment preset="city" />
-
-              {/* Robust Studio Lighting */}
-              <ambientLight intensity={0.4} />
-              <directionalLight position={[10, 10, 5]} intensity={1.5} />
+              {/* Enhanced Studio Lighting (No external HDR dependencies) */}
+              <ambientLight intensity={1} />
+              <directionalLight position={[10, 10, 10]} intensity={2} />
               <directionalLight
-                position={[-10, 5, 5]}
-                intensity={1}
+                position={[-10, 10, 10]}
+                intensity={1.5}
                 color="#c8d9e6"
               />
-              <pointLight position={[0, 0, 2]} intensity={20} color="#ffffff" />
+              <pointLight position={[0, 0, 5]} intensity={40} color="#ffffff" />
+              <pointLight
+                position={[0, 5, -5]}
+                intensity={30}
+                color="#ffffff"
+              />
 
               <FloatingGallery />
 
@@ -161,29 +163,23 @@ export default function Hero3D() {
                 far={4.5}
               />
 
-              <EffectComposer disableNormalPass>
-                <Bloom
-                  luminanceThreshold={0.8}
-                  mipmapBlur
-                  intensity={0.5}
-                  radius={0.5}
-                />
-                <Noise opacity={0.05} />
-                <Vignette eskil={false} offset={0.1} darkness={0.4} />
+              <EffectComposer disableNormalPass multisampling={0}>
+                <Bloom luminanceThreshold={1} intensity={0.3} radius={0.3} />
+                <Vignette offset={0.3} darkness={0.5} />
               </EffectComposer>
             </Suspense>
           </Canvas>
         </div>
 
         {/* Sticky Label on Image equivalent */}
-        <div className="absolute bottom-12 right-12 z-10 text-white text-right pointer-events-none">
+        {/* <div className="absolute bottom-12 right-12 z-10 text-white text-right pointer-events-none">
           <p className="font-display italic text-lg opacity-90">
             {t("visual_concept")}
           </p>
           <p className="font-sans text-[10px] tracking-widest uppercase opacity-70 mt-1">
             {t("experimental_space")}
           </p>
-        </div>
+        </div> */}
       </section>
     </div>
   );

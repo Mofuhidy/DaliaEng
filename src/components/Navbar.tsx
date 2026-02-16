@@ -64,20 +64,6 @@ export default function Navbar() {
         {/* Lang Switcher / Right Action */}
         <div className="flex items-center gap-4">
           <LangSwitcher />
-          <button className="hidden md:flex items-center justify-center text-primary hover:text-navy transition-colors">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </button>
         </div>
       </div>
 
@@ -110,9 +96,11 @@ export default function Navbar() {
             </Link>
 
             <div className="absolute bottom-12 flex gap-8 font-sans text-xs tracking-widest uppercase text-muted">
-              <a href="#">Instagram</a>
-              <a href="#">Pinterest</a>
-              <a href="#">LinkedIn</a>
+              <a
+                href="https://www.instagram.com/dalia_aldukhain/"
+                target="_blank">
+                Instagram
+              </a>
             </div>
           </motion.div>
         )}

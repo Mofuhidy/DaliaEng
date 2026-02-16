@@ -103,7 +103,7 @@ export default function GlassSlab({
   return (
     <group ref={groupRef} position={position} rotation={rotation as any}>
       {/* The Glass Monolith */}
-      <mesh ref={meshRef} castShadow receiveShadow>
+      <mesh ref={meshRef}>
         <boxGeometry args={[3, 4, 0.1]} />
         <MeshTransmissionMaterial
           ref={materialRef}
@@ -113,13 +113,15 @@ export default function GlassSlab({
           ior={1.2}
           chromaticAberration={0.03}
           anisotropy={0.1}
-          distortion={0.1}
-          distortionScale={0.5}
-          temporalDistortion={0.1}
+          distortion={0}
+          distortionScale={0}
+          temporalDistortion={0}
           clearcoat={1}
           attenuationDistance={1}
           attenuationColor="#ffffff"
           color="#ffffff"
+          resolution={512}
+          samples={4}
         />
       </mesh>
 
