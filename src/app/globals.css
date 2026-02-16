@@ -80,3 +80,23 @@ h4,
 .cursor-view {
   cursor: crosshair; /* Fallback */
 }
+
+.font-sans-arabic {
+  font-family: var(--font-ibm-plex-arabic), sans-serif;
+}
+
+[dir="rtl"] .font-sans-arabic {
+  font-family: var(--font-ibm-plex-arabic), sans-serif;
+}
+
+/* RTL Drop Cap Fix */
+[dir="rtl"] .first-letter-drop::first-letter {
+  float: right;
+  margin-left: 0.75rem;
+  margin-right: 0;
+}
+
+.first-letter-drop::first-letter {
+  float: left;
+  margin-right: 0.75rem;
+}
